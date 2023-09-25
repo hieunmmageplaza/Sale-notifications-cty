@@ -1,0 +1,138 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.custom-range-slider {
+  width: 300px;
+}
+
+.custom-range-slider .Polaris-RangeSlider-SingleThumb__Input {
+  appearance:auto !important;
+}
+/*CSSS display position*/
+.Polaris-DisplayPositionItem .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 2px;
+  width: 150px;
+  height: 70px;
+  background-color: #ffffff;
+  border: 2px solid #f4f6f8;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.Polaris-DisplayPositionItem .item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  color: red;
+}
+
+
+.Polaris-DisplayPositionItem .item.item-highlight {
+  background: #5c6ac4;
+  margin: 2px;
+}
+/*CSSS display position*/
+
+
+/*css for notification */
+
+/* CSS */
+.Polaris-ResourceItem .container {
+  display: grid;
+  grid-template-columns: 120px 260px 10px; /* Đặt chiều rộng cho mỗi cột */
+  width:400px;
+  height:120px;
+  position: relative;
+  border:1px solid #ccc;
+}
+
+.Polaris-ResourceItem .left {
+  padding: 5px;
+  text-align: center; /* Căn giữa nội dung trong phần trái */
+  display: flex; /* Sử dụng flexbox */
+  flex-direction: column; /* Hiển thị các phần tử con theo chiều dọc */
+  justify-content: center; /* Căn giữa theo chiều dọc */
+}
+.Polaris .left img{
+  max-width: 100%;
+  height: 100%;
+}
+
+.Polaris-ResourceItem .middle {
+  padding: 5px;
+}
+
+.Polaris-ResourceItem .right {
+  padding: 5px;
+}
+
+.Polaris-ResourceItem .top-button{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.Polaris-ResourceItem .bottom-button{
+  position: absolute;
+  bottom: 0;
+  right: 60px;
+}
+.Polaris-DisplayPositionItem{
+  display: flex;
+}
+.Polaris-DisplayPositionItem .container.highlight{
+  border: 2px solid #5c6ac4;
+}
+
+
+/*css for notification */
+
+/*CSS for Slider Range */
+.Polaris-RangeSlider-SingleThumb__Suffix .RangeSlideLabelBox{
+  min-width: 100px;
+  min-height: 35px;
+  border: 1px solid #ccc;
+  text-align: center;
+  line-height: 35px;
+  border-radius: 7px;
+}
