@@ -14,7 +14,7 @@ import {
   TopBar
 } from '@shopify/polaris';
 import en from '@shopify/polaris/locales/en.json';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import ResourceItems from './ResourceItems';
 import SelectExample from './components/SelectInput';
 import CheckboxExample from './components/CheckBox';
@@ -23,6 +23,8 @@ import DisplayPositionItem from './components/DisplayPositionItem';
 import {HomeMajor, NotificationMajor, SettingsMajor} from '@shopify/polaris-icons';
 import NotificationsItem from './components/NotificationsItem';
 import MultilineFieldExample from './components/TextField';
+import {api} from '@assets/helpers';
+import useFetchApi from '@assets/hooks/api/useFetchApi';
 
 function App() {
   const [selected, setSelected] = useState(0);
@@ -40,6 +42,10 @@ function App() {
       panelID: 'accepts-marketing-content-1'
     }
   ];
+
+  const {data} = useFetchApi({url: '/notifications'});
+
+  console.log('data' + data);
   const [hideTimeAgo, setHideTimeAgo] = useState(false);
   const [truncateProductName, setTruncateProductName] = useState(false);
   const [firstDelay, setFirstDelay] = useState(3);
@@ -91,7 +97,7 @@ function App() {
             enabled={enabled}
           >
             <TextStyle>
-              App status is <b>{enabled ? 'enabled' : 'disabled'}</b>
+              App status is <b>{enabled ? 'enabledz' : 'disabl123sssssezzzd'}</b>
             </TextStyle>
           </SettingToggle>
         </Layout.Section>
