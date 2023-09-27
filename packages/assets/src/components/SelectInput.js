@@ -2,8 +2,8 @@ import {Select} from '@shopify/polaris';
 import React, {useCallback} from 'react';
 
 // eslint-disable-next-line react/prop-types
-function SelectExample({value, onchange}) {
-  const handleSelectChange = useCallback(newValue => onchange(newValue), [onchange]);
+function SelectExample({value, onChange}) {
+  const handleSelectChange = useCallback(newValue => onChange(newValue), [onChange]);
 
   const options = [
     {label: 'All Pages', value: 'all-pages'},

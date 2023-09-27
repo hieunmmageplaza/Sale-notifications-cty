@@ -1,7 +1,7 @@
 import React from 'react';
 import {Navigation} from '@shopify/polaris';
 import {useHistory, useLocation} from 'react-router-dom';
-import {ArrowLeftMinor, HomeMajor, SettingsMajor, ShareMinor} from '@shopify/polaris-icons';
+import { ArrowLeftMinor, HomeMajor, NotificationMajor, SettingsMajor, ShareMinor } from "@shopify/polaris-icons";
 import '@assets/styles/layout/navigation.scss';
 import {useStore} from '@assets/reducers/storeReducer';
 import {isEmbeddedApp, prependRoute} from '@assets/config/app';
@@ -52,17 +52,17 @@ export default function AppNavigation() {
 
   return (
     <Navigation location="">
-      {!isEmbeddedApp && (
-        <Navigation.Section
-          items={[
-            {
-              icon: ArrowLeftMinor,
-              label: 'Back to Shopify',
-              onClick: () => window.open(`https://${getDomain(shop)}/admin`)
-            }
-          ]}
-        />
-      )}
+      {/*{!isEmbeddedApp && (*/}
+      {/*  <Navigation.Section*/}
+      {/*    items={[*/}
+      {/*      {*/}
+      {/*        icon: ArrowLeftMinor,*/}
+      {/*        label: 'Back to Shopify',*/}
+      {/*        onClick: () => window.open(`https://${getDomain(shop)}/admin`)*/}
+      {/*      }*/}
+      {/*    ]}*/}
+      {/*  />*/}
+      {/*)}*/}
       <Navigation.Section
         fill
         separator
@@ -70,7 +70,7 @@ export default function AppNavigation() {
           {
             url: '/',
             icon: HomeMajor,
-            label: 'Dashboard',
+            label: 'Home',
             selected: location.pathname === getUrl('/'),
             onClick: () => {
               history.push('/');
@@ -78,11 +78,29 @@ export default function AppNavigation() {
           },
           {
             url: '/samples',
-            icon: ShareMinor,
+            icon: NotificationMajor,
             label: 'Samples',
             selected: location.pathname === getUrl('/samples'),
             onClick: () => {
               history.push('/samples');
+            }
+          },
+          {
+            url: '/settings',
+            icon: SettingsMajor,
+            label: 'Setting',
+            selected: location.pathname === getUrl('/settings'),
+            onClick: () => {
+              history.push('/settings');
+            }
+          },
+          {
+            url: '/notifications',
+            icon: NotificationMajor,
+            label: 'Notifications',
+            selected: location.pathname === getUrl('/notifications'),
+            onClick: () => {
+              history.push('/notifications');
             }
           }
         ].reduce(prepareMenu, [])}

@@ -1,36 +1,10 @@
-import React, {useState} from 'react';
-import {ResourceItem, ResourceList, Stack} from '@shopify/polaris';
-import NotificationsItem from './components/NotificationsItem';
+import React, { useState } from "react";
+import { ResourceItem, ResourceList, Stack } from "@shopify/polaris";
+import NotificationsItem from "@assets/components/NotificationsItem";
 
-function ResourceItems() {
+// eslint-disable-next-line react/prop-types
+function ResourceItems({data}) {
   const [selectedIds, setSelectedIds] = useState([]);
-
-  const [testItems, setTestItems] = useState([
-    {
-      id: 1,
-      text1: 'Someone in New York, United States1',
-      text2: 'Puschased Sport Senaker',
-      text3: 'From March 8 ,2021',
-      text4: 'a day ago',
-      media: 'https://burst.shopifycdn.com/photos/tucan-scarf_373x@2x.jpg'
-    },
-    {
-      id: 2,
-      text1: 'Someone in New York, United States2',
-      text2: 'Puschased Sport Senaker',
-      text3: 'From March 8 ,2021',
-      text4: 'a day ago',
-      media: 'https://burst.shopifycdn.com/photos/tucan-scarf_373x@2x.jpg'
-    },
-    {
-      id: 3,
-      text1: 'Someone in New York, United States3',
-      text2: 'Purchased Sport Sneaker',
-      text3: 'From March 8 ,2021',
-      text4: 'a day ago',
-      media: 'https://burst.shopifycdn.com/photos/tucan-scarf_373x@2x.jpg'
-    }
-  ]);
 
   const promotedBulkActions = [
     {
@@ -42,10 +16,44 @@ function ResourceItems() {
       // onAction:
     }
   ];
+  const formatTimeAgo = timestampInMillis => {
+    const currentTimestamp = Date.now();
+    const timeDifference = currentTimestamp - timestampInMillis;
+
+    const seconds = Math.floor(timeDifference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    return days;
+  };
+
+  const formatDateTime = (timestampInSeconds, timestampInNanoseconds) => {
+    const timestamp = timestampInSeconds + timestampInNanoseconds / 1e9;
+    const dateObj = new Date(timestamp * 1000);
+    const monthNames = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
+    const day = dateObj.getDate();
+    const month = monthNames[dateObj.getMonth()];
+    const year = dateObj.getFullYear();
+
+    return `${month} ${day}, ${year}`;
+  };
 
   return (
     <ResourceList
-      items={testItems}
+      items={data}
       promotedBulkActions={promotedBulkActions}
       selectedItems={selectedIds}
       onSelectionChange={setSelectedIds}
@@ -54,15 +62,29 @@ function ResourceItems() {
         {label: 'Oldest update', value: '2'}
       ]}
       renderItem={item => {
-        const {id, text1, text2, text3, text4, media} = item;
+        const {id, timestamp} = item;
+        const timestampInSeconds = timestamp._seconds;
+        const timestampInNanoseconds = timestamp._nanoseconds;
+        const timestampInMillis =
+          timestampInSeconds * 1000 + Math.floor(timestampInNanoseconds / 1e6);
+        const formattedTimestamp = formatTimeAgo(timestampInMillis);
+        const timeStampFormatted = formatDateTime(timestampInSeconds, timestampInNanoseconds);
+
         return (
           <div className="Polaris-ResourceItem">
             <ResourceItem id={id}>
               <Stack>
                 <Stack.Item fill>
-                  <NotificationsItem text1={text1} text2={text2} text4={text4} media={media} />
+                  <NotificationsItem
+                    city={item.city}
+                    productName={item.productName}
+                    timeStamp={formattedTimestamp}
+                    productImage={item.productImage}
+                    country={item.country}
+                    firstName={item.firstName}
+                  />
                 </Stack.Item>
-                <Stack.Item>{text3}</Stack.Item>
+                <Stack.Item>{timeStampFormatted}</Stack.Item>
               </Stack>
             </ResourceItem>
           </div>

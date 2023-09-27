@@ -1,8 +1,9 @@
 import {TextField} from '@shopify/polaris';
 import React, {useCallback} from 'react';
 
-function MultilineFieldExample({label, helpText, value, onchange}) {
-  const handleChange = useCallback(newValue => onchange(newValue), [onchange]);
+// eslint-disable-next-line react/prop-types
+function MultilineFieldExample({label, helpText, value, onChange}) {
+  const handleChange = useCallback(newValue => onChange(newValue), [onChange]);
 
   return (
     <TextField

@@ -2,12 +2,12 @@ import {Checkbox} from '@shopify/polaris';
 import React, {useCallback} from 'react';
 
 // eslint-disable-next-line react/prop-types
-function CheckboxExample({label, checked, helpText, onchange}) {
+function CheckboxExample({label, checked, helpText, onChange}) {
   const handleChange = useCallback(
     newChecked => {
-      onchange(newChecked);
+      onChange(newChecked);
     },
-    [onchange]
+    [onChange]
   );
 
   return <Checkbox label={label} checked={checked} onChange={handleChange} helpText={helpText} />;
