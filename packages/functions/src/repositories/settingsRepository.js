@@ -21,10 +21,26 @@ export async function updateSettingsData() {
   const querySnapshot = await collection.where('shopId', '=', 12).get();
   const updatePromises = [];
   querySnapshot.forEach(doc => {
-    // Create an array of update Promises
     updatePromises.push(doc.ref.update({truncateProductName: 100}));
   });
 
   // Wait for all update Promises to complete
   await Promise.all(updatePromises);
+}
+
+export async function getSettingByShopId(shopId) {
+  const snapshot = await collection.where('shopId', '==', '12').get();
+  const data = [];
+  console.log('shopId'+shopId);
+  if (snapshot.empty) {
+    console.log('No matching documents.');
+    return data;
+  }
+  snapshot.forEach(doc => {
+    data.push({
+      id: doc.id,
+      ...doc.data()
+    });
+  });
+  return data;
 }

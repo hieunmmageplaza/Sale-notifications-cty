@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Card, DisplayText, FormLayout, Layout, Page, Tabs} from '@shopify/polaris';
 import NotificationsItem from '@assets/components/NotificationsItem';
 import DisplayPositionItem from '@assets/components/DisplayPositionItem';
@@ -9,20 +9,21 @@ import MultilineFieldExample from '@assets/components/TextField';
 import '../../App.css';
 import useFetchApi from '@assets/hooks/api/useFetchApi';
 import defaultSetting from '@avada/functions/src/const/settings/defaultSetting';
+import {api} from '../../helpers';
 /**
  * @return {JSX.Element}
  */
 export default function Settings() {
   const handleSave = () => {
-    console.log('Display duration:', settings.displayDuration);
-    console.log('delay:', settings.firstDelay);
-    console.log('popsInterval:', settings.popInterval);
-    console.log('maxPopsDisplay:', settings.maxPopsDisplay);
-    console.log('hideTimeAgo:', settings.hideTimeAgo);
-    console.log('truncateProductName:', settings.truncateProductName);
-    console.log('allowShow:', settings.allowShow);
-    console.log('includedPages:', settings.includeUrls);
-    console.log('excludedPages:', settings.excludeUrls);
+    console.log('Display duration:', input.displayDuration);
+    console.log('delay:', input.firstDelay);
+    console.log('popsInterval:', input.popInterval);
+    console.log('maxPopsDisplay:', input.maxPopsDisplay);
+    console.log('hideTimeAgo:', input.hideTimeAgo);
+    console.log('truncateProductName:', input.truncateProductName);
+    console.log('allowShow:', input.allowShow);
+    console.log('includedPages:', input.includeUrls);
+    console.log('excludedPages:', input.excludeUrls);
   };
 
   const tabs = [
@@ -42,15 +43,32 @@ export default function Settings() {
 
   const handleTabChange = useCallback(selectedTabIndex => setSelected(selectedTabIndex), []);
 
-  // const {loading, data: input, setData: setInput, setLoading} = useFetchApi(
-  //   '/settings',
-  //   defaultSetting
-  // );
-  const [settings, setSettings] = useState(defaultSetting);
+  // const [settings, setSettings] = useState(defaultSetting);
+  const {data: input, setData: setInput, loading, setLoading} = useFetchApi({
+    url: '/settings',
+    defaultData: defaultSetting
+  });
   const handleChangeInput = (key, value) => {
-    const updatedSettings = {...settings, [key]: value};
-    setSettings(updatedSettings);
+    const updatedSettings = {...input, [key]: value};
+    setInput(updatedSettings);
   };
+
+  console.log('input   ' + input.allowShow);
+
+  // console.log(input);
+
+  // async function callApi() {
+  //   const {data} = await api('/settings');
+  //   data.forEach(dataObject => {
+  //     const displayDuration = dataObject.allowShow;
+  //     console.log('Display Duration:', displayDuration);
+  //   });
+  // }
+  //
+  // useEffect(() => {
+  //   callApi();
+  // }, []);
+
   return (
     <Page
       title="Setting"
@@ -88,13 +106,13 @@ export default function Settings() {
                     </div>
                     <CheckboxExample
                       label="Hide time ago"
-                      checked={settings.hideTimeAgo}
+                      checked={input.hideTimeAgo}
                       onChange={value => handleChangeInput('hideTimeAgo', value)}
                     />
                     <br />
                     <CheckboxExample
                       label="Truncate content text"
-                      checked={settings.truncateProductName}
+                      checked={input.truncateProductName}
                       onChange={value => handleChangeInput('truncateProductName', value)}
                       helpText="If your product name is long for one line, it will be truncated to 'Prodcut na...'"
                     />
@@ -108,7 +126,7 @@ export default function Settings() {
                                 label="Display duration"
                                 helpText="How long each pop will display on your page"
                                 type="second(s)"
-                                value={settings.displayDuration}
+                                value={input.displayDuration}
                                 onChange={value => handleChangeInput('displayDuration', value)}
                               />
                             </div>
@@ -119,7 +137,7 @@ export default function Settings() {
                                 label="Time before the firt pop"
                                 helpText="The delay time before the first notification"
                                 type="second(s)"
-                                value={settings.firstDelay}
+                                value={input.firstDelay}
                                 onChange={value => handleChangeInput('firstDelay', value)}
                               />
                             </div>
@@ -134,7 +152,7 @@ export default function Settings() {
                                 label="Gap time between two pops"
                                 helpText="The time interval between two popup notifications"
                                 type="second(s)"
-                                value={settings.popInterval}
+                                value={input.popInterval}
                                 onChange={value => handleChangeInput('popInterval', value)}
                               />
                             </div>
@@ -145,7 +163,7 @@ export default function Settings() {
                                 label="Maximum of popups"
                                 helpText="The maximum number of popups are allowed to show after..."
                                 type="pop(s)"
-                                value={settings.maxPopsDisplay}
+                                value={input.maxPopsDisplay}
                                 onChange={value => handleChangeInput('maxPopsDisplay', value)}
                               />
                             </div>
@@ -158,14 +176,14 @@ export default function Settings() {
                 {selected === 1 && (
                   <React.Fragment>
                     <SelectExample
-                      value={settings.allowShow}
+                      value={input.allowShow}
                       onChange={value => handleChangeInput('allowShow', value)}
                     />
                     <FormLayout>
-                      {settings.allowShow === 'specific-pages' && (
+                      {input.allowShow === 'specific-pages' && (
                         <MultilineFieldExample
                           label="Included pages"
-                          value={settings.includeUrls}
+                          value={input.includeUrls}
                           onChange={value => handleChangeInput('includeUrls', value)}
                           helpText="Page URLs to show the pop-up (separated by new lines)"
                         />
@@ -173,7 +191,7 @@ export default function Settings() {
                       <MultilineFieldExample
                         label="Excluded pages"
                         helpText="Page URLs NOT to show the pop-upp (separated by new lines)"
-                        value={settings.excludeUrls}
+                        value={input.excludeUrls}
                         onChange={value => handleChangeInput('excludeUrls', value)}
                       />
                     </FormLayout>
@@ -187,5 +205,3 @@ export default function Settings() {
     </Page>
   );
 }
-
-Settings.propTypes = {};

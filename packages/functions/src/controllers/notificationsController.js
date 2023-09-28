@@ -1,4 +1,4 @@
-import {getListNewNotifications} from '@functions/repositories/notificationRepository'
+import {getListNewNotifications} from '@functions/repositories/notificationRepository';
 
 export async function getListNotifications(ctx) {
   try {
