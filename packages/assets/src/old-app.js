@@ -19,7 +19,7 @@ import ResourceItems from './ResourceItems';
 import SelectExample from './components/SelectInput';
 import CheckboxExample from './components/CheckBox';
 import RangeSliderExample from './components/RangeSlider';
-import DisplayPositionItem from './components/DisplayPositionItem';
+import DesktopPosition from './components/DesktopPosition/DesktopPosition';
 import {HomeMajor, NotificationMajor, SettingsMajor} from '@shopify/polaris-icons';
 import NotificationsItem from './components/NotificationsItem';
 import MultilineFieldExample from './components/TextField';

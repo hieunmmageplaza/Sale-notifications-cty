@@ -1,46 +1,23 @@
 import {Firestore} from '@google-cloud/firestore';
+import {presentDataAndFormatDate} from '@avada/firestore-utils';
 
 const firestore = new Firestore();
 /** @type CollectionReference */
 const collection = firestore.collection('setting');
 
-export async function getListNewNotifications() {
-  const notifications = await collection.get();
-  const data = [];
-
-  notifications.forEach(doc => {
-    data.push({
-      id: doc.id,
-      ...doc.data()
-    });
-  });
-  return data;
-}
-
-export async function updateSettingsData() {
-  const querySnapshot = await collection.where('shopId', '=', 12).get();
-  const updatePromises = [];
-  querySnapshot.forEach(doc => {
-    updatePromises.push(doc.ref.update({truncateProductName: 100}));
-  });
-
-  // Wait for all update Promises to complete
-  await Promise.all(updatePromises);
+export async function updateSettingsData(shopId) {
+  const res = await collection.doc(id).update();
+  return {success: true};
 }
 
 export async function getSettingByShopId(shopId) {
-  const snapshot = await collection.where('shopId', '==', '12').get();
-  const data = [];
-  console.log('shopId'+shopId);
-  if (snapshot.empty) {
-    console.log('No matching documents.');
-    return data;
+  const docs = await collection
+    .where('shopId', '==', shopId)
+    .limit(1)
+    .get();
+  if (docs.empty) {
+    return null;
   }
-  snapshot.forEach(doc => {
-    data.push({
-      id: doc.id,
-      ...doc.data()
-    });
-  });
-  return data;
+  const [doc] = docs.docs;
+  return presentDataAndFormatDate(doc);
 }

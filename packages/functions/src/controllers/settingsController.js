@@ -19,8 +19,9 @@ import {getCurrentShop} from '@functions/helpers/auth';
 
 export async function getSetting(ctx) {
   try {
-    console.log('1234');
     const shopId = getCurrentShop(ctx);
+    console.log('shopId ' + shopId);
+
     const data = await getSettingByShopId(shopId);
     ctx.body = {data, success: true};
   } catch (error) {

@@ -1,0 +1,40 @@
+.Mageplaza-DesktopPosition {
+  width: 20rem;
+  height: 10rem;
+  border-radius:1rem;
+  border: .3rem solid #d3d3d3;
+  position: relative;
+  cursor: pointer;
+
+  .Mageplaza-DesktopPosition__Item {
+    width: 9.5rem;
+    height: 4.5rem;
+    background-color: #d3d3d3;
+    margin: .5rem;
+    position: absolute;
+  }
+
+  .Mageplaza-DesktopPosition__Item._selected {
+    background-color: #01007F
+  }
+  .top-left {
+    top: 0;
+    right: 0;
+  }
+  .top-right {
+    top: 0;
+    left: 0;
+  }
+  .bottom-right {
+    bottom: 0;
+    right: 0;
+  }
+  .bottom-left {
+    bottom: 0;
+    left: 0;
+  }
+}
+
+.Mageplaza-DesktopPosition._selected {
+  border: .3rem solid #01007F;
+}
