@@ -14,10 +14,10 @@ export const defaultSettings = {
 };
 
 export const desktopPositions = [
-  {position: TOP_LEFT},
-  {position: TOP_RIGHT},
   {position: BOTTOM_LEFT},
-  {position: BOTTOM_RIGHT}
+  {position: BOTTOM_RIGHT},
+  {position: TOP_LEFT},
+  {position: TOP_RIGHT}
 ];
 
 const tabs = [

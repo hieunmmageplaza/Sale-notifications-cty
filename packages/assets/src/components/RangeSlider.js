@@ -10,20 +10,22 @@ function RangeSliderExample({label, helpText, type, value, onChange}) {
   );
   return (
     <>
-      <RangeSlider
-        label={label}
-        value={value}
-        onChange={handleRangeSliderChange}
-        suffix={
-          <div className="RangeSlideLabelBox">
-            <p>
-              {value + ' '}
-              {type}
-            </p>
-          </div>
-        }
-        helpText={helpText}
-      />
+      <div className="custom-range-slider">
+        <RangeSlider
+          label={label}
+          value={value}
+          onChange={handleRangeSliderChange}
+          suffix={
+            <div className="RangeSlideLabelBox">
+              <p>
+                {value + ' '}
+                {type}
+              </p>
+            </div>
+          }
+          helpText={helpText}
+        />
+      </div>
     </>
   );
 }

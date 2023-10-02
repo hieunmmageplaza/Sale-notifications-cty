@@ -16,6 +16,6 @@ export default function apiRouter(isEmbed = false) {
   router.get('/appNews', appNewsController.getList);
   router.get('/notifications', notificationsController.getListNotifications);
   router.get('/settings', settingsController.getSetting);
-  // router.put('/settings', settingsController.updateSettingByShopId);
+  router.put('/settings', settingsController.updateSettingByShopId);
   return router;
 }

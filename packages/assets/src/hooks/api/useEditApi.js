@@ -30,6 +30,7 @@ export default function useEditApi({
    * @returns {Promise<boolean>}
    */
   const handleEdit = async (data, newEditing = true) => {
+    // console.log(JSON.stringify(data));
     try {
       setEditing(prev =>
         typeof newEditing === 'boolean' ? newEditing : {...prev, [newEditing]: true}

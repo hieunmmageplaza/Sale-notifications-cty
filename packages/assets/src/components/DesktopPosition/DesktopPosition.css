@@ -15,7 +15,7 @@
   }
 
   .Mageplaza-DesktopPosition__Item._selected {
-    background-color: #01007F
+    background-color: #5c6ac4
   }
   .top-left {
     top: 0;
@@ -36,5 +36,5 @@
 }
 
 .Mageplaza-DesktopPosition._selected {
-  border: .3rem solid #01007F;
+  border: .3rem solid #5c6ac4;
 }

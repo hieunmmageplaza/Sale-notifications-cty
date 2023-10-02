@@ -5,8 +5,8 @@ const firestore = new Firestore();
 /** @type CollectionReference */
 const collection = firestore.collection('setting');
 
-export async function updateSettingsData(shopId) {
-  const res = await collection.doc(id).update();
+export async function updateSettingsData(docId) {
+  const res = await collection.doc('test1').update({popsInterval: 10});
   return {success: true};
 }
 
