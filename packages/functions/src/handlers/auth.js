@@ -7,7 +7,7 @@ import path from 'path';
 import createErrorHandler from '@functions/middleware/errorHandler';
 import firebase from 'firebase-admin';
 import appConfig from '@functions/config/app';
-import {api} from '@functions/helpers/api';
+import settingsController from '@functions/controllers/settingsController';
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp();
@@ -46,9 +46,8 @@ app.use(
     isEmbeddedApp: true,
     afterInstall: async ctx => {
       try {
-        const shopifyDomain = ctx.state.shopify.shop;
-        const setDefaultSettings = await api({url: '/settings', method: 'POST'});
-        console.log('------------tttttt');
+        // const shopifyDomain = ctx.state.shopify.shop;
+        app.post('/settings', settingsController.setTheDefaultSettings);
       } catch (e) {
         console.error(e);
       }

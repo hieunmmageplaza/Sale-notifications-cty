@@ -15,8 +15,10 @@ export default function apiRouter(isEmbed = false) {
   router.get('/subscription', subscriptionController.getSubscription);
   router.get('/appNews', appNewsController.getList);
   router.get('/notifications', notificationsController.getListNotifications);
+  router.post('/notifications', notificationsController.addNewNotification);
   router.get('/settings', settingsController.getSetting);
   router.put('/settings', settingsController.updateSettingByDocId);
   router.post('/settings', settingsController.setTheDefaultSettings);
+
   return router;
 }

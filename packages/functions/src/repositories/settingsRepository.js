@@ -21,3 +21,8 @@ export async function getSettingByShopId(shopId) {
   const [doc] = docs.docs;
   return presentDataAndFormatDate(doc);
 }
+
+export async function setTheDefaultData(shopId, defaultData) {
+  await collection.add(defaultData);
+  return {success: true};
+}

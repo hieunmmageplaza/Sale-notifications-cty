@@ -9,3 +9,7 @@ export async function getListNotifications(ctx) {
     ctx.body = {error: 'Internal server error', success: false};
   }
 }
+
+export async function addNewNotification(ctx) {
+  console.log('1231');
+}
