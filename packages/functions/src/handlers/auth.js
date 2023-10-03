@@ -7,6 +7,7 @@ import path from 'path';
 import createErrorHandler from '@functions/middleware/errorHandler';
 import firebase from 'firebase-admin';
 import appConfig from '@functions/config/app';
+import {api} from '@functions/helpers/api';
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp();
@@ -43,7 +44,15 @@ app.use(
     },
     hostName: appConfig.baseUrl,
     isEmbeddedApp: true,
-    afterInstall: ctx => {},
+    afterInstall: async ctx => {
+      try {
+        const shopifyDomain = ctx.state.shopify.shop;
+        const setDefaultSettings = await api({url: '/settings', method: 'POST'});
+        console.log('------------tttttt');
+      } catch (e) {
+        console.error(e);
+      }
+    },
     afterThemePublish: ctx => {
       // Publish assets when theme is published or changed here
       return (ctx.body = {

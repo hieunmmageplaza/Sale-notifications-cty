@@ -1,14 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import {
-  Card,
-  DisplayText,
-  FormLayout,
-  Layout,
-  Page,
-  Stack,
-  Tabs,
-  TextStyle
-} from '@shopify/polaris';
+import {Card, FormLayout, Layout, Page, Stack, Tabs, TextStyle} from '@shopify/polaris';
 import NotificationsItem from '@assets/components/NotificationsItem';
 import DesktopPosition from '@assets/components/DesktopPosition/DesktopPosition';
 import CheckboxExample from '@assets/components/CheckBox';
@@ -28,32 +19,19 @@ export default function Settings() {
     url: '/settings',
     defaultData: defaultSettings
   });
-
+  const {editing, handleEdit} = useEditApi({
+    url: '/settings'
+  });
   const handleChangeInput = (key, value) => {
     const updatedSettings = {...input, [key]: value};
     setInput(updatedSettings);
   };
-  console.log('input  ' + JSON.stringify(input));
-
-  const {editing, handleEdit} = useEditApi({url: '/settings'});
 
   const handleSave = async () => {
-    // console.log('Display duration:', input.displayDuration);
-    // console.log('delay:', input.firstDelay);
-    // console.log('popsInterval:', input.popInterval);
-    // console.log('maxPopsDisplay:', input.maxPopsDisplay);
-    // console.log('hideTimeAgo:', input.hideTimeAgo);
-    // console.log('truncateProductName:', input.truncateProductName);
-    // console.log('allowShow:', input.allowShow);
-    // console.log('includedPages:', input.includeUrls);
-    // console.log('excludedPages:', input.excludeUrls);
-    console.log('testt');
-    const success = await handleEdit(input);
-    if (success) {
-      console.log('right');
-    }
-    {
-      console.log('wrong');
+    try {
+      const success = await handleEdit(input);
+    } catch (error) {
+      console.error('Error', error);
     }
   };
 
