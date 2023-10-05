@@ -7,7 +7,10 @@ import path from 'path';
 import createErrorHandler from '@functions/middleware/errorHandler';
 import firebase from 'firebase-admin';
 import appConfig from '@functions/config/app';
-import settingsController from '@functions/controllers/settingsController';
+import settingsController, {setTheDefaultSettings} from '@functions/controllers/settingsController';
+import fs from 'fs';
+import {getShopByDomain} from '@functions/repositories/shopRepository';
+import {getListOrders} from '@functions/controllers/orderController';
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp();
@@ -46,8 +49,12 @@ app.use(
     isEmbeddedApp: true,
     afterInstall: async ctx => {
       try {
-        // const shopifyDomain = ctx.state.shopify.shop;
-        app.post('/settings', settingsController.setTheDefaultSettings);
+        const shopifyDomain = ctx.state.shopify.shop;
+        const shopInfo = await getShopByDomain(shopifyDomain);
+        const shopId = shopInfo.id;
+        await setTheDefaultSettings(shopInfo, ctx);
+        await getListOrders(ctx, shopId);
+        // install webhook
       } catch (e) {
         console.error(e);
       }

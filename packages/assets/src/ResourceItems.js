@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { ResourceItem, ResourceList, Stack } from "@shopify/polaris";
-import NotificationsItem from "@assets/components/NotificationsItem";
+import React, {useState} from 'react';
+import {ResourceItem, ResourceList, Stack} from '@shopify/polaris';
+import NotificationsItem from '@assets/components/NotificationsItem';
 
 // eslint-disable-next-line react/prop-types
 function ResourceItems({data}) {
@@ -9,10 +9,6 @@ function ResourceItems({data}) {
   const promotedBulkActions = [
     {
       // content: 'Complete',
-      // onAction:
-    },
-    {
-      // content: 'Remove',
       // onAction:
     }
   ];
@@ -50,10 +46,24 @@ function ResourceItems({data}) {
 
     return `${month} ${day}, ${year}`;
   };
+  const [sortOrder, setSortOrder] = useState('1');
 
+  const handleSortChange = selectedSortOrder => {
+    setSortOrder(selectedSortOrder);
+  };
+  const sortedData = [...data].sort((a, b) => {
+    const timestampA = a.timestamp._seconds * 1000 + Math.floor(a.timestamp._nanoseconds / 1e6);
+    const timestampB = b.timestamp._seconds * 1000 + Math.floor(b.timestamp._nanoseconds / 1e6);
+
+    if (sortOrder === '1') {
+      return timestampB - timestampA;
+    } else {
+      return timestampA - timestampB;
+    }
+  });
   return (
     <ResourceList
-      items={data}
+      items={sortedData}
       promotedBulkActions={promotedBulkActions}
       selectedItems={selectedIds}
       onSelectionChange={setSelectedIds}
@@ -61,6 +71,8 @@ function ResourceItems({data}) {
         {label: 'Newest update', value: '1'},
         {label: 'Oldest update', value: '2'}
       ]}
+      sortValue={sortOrder}
+      onSortChange={handleSortChange}
       renderItem={item => {
         const {id, timestamp} = item;
         const timestampInSeconds = timestamp._seconds;

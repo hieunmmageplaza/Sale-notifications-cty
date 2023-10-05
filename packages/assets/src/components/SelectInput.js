@@ -10,14 +10,7 @@ function SelectExample({value, onChange}) {
     {label: 'Specific pages', value: 'specific-pages'}
   ];
 
-  return (
-    <Select
-      label="PAGE RESTRICTION"
-      options={options}
-      onChange={handleSelectChange}
-      value={value}
-    />
-  );
+  return <Select options={options} onChange={handleSelectChange} value={value} />;
 }
 
 export default SelectExample;

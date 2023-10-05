@@ -1,9 +1,7 @@
-import {getCurrentUserShopId} from '@avada/shopify-auth/build/authentication';
 import {getShopById} from '@avada/shopify-auth';
 import Shopify from 'shopify-api-node';
 
-export async function exampleAction(ctx) {
-  const shopId = getCurrentUserShopId(ctx);
+export async function getListOrdersByShopId(ctx, shopId) {
   const shopData = await getShopById(shopId);
   const shopify = new Shopify({
     accessToken: shopData.accessToken,
@@ -13,5 +11,6 @@ export async function exampleAction(ctx) {
     status: 'open',
     limit: 30
   });
-  ctx.body = {data: {orders}, success: true};
+
+  return orders;
 }

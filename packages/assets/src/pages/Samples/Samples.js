@@ -9,37 +9,17 @@ import useFetchApi from '@assets/hooks/api/useFetchApi';
  * @constructor
  */
 export default function Samples() {
-  const {data: todos, loading} = useFetchApi({url: '/samples'});
-
-  const {selectedResources, handleSelectionChange} = useIndexResourceState(todos);
-
+  const {data} = useFetchApi({url: '/samples'});
+  if (data.orders) {
+    data.orders.forEach((order, index) => {
+      console.log(order.billing_address);
+    });
+  }
   return (
     <Page title="Samples" breadcrumbs={[{url: '/'}]}>
       <Layout>
         <Layout.Section>
-          <Card>
-            <IndexTable
-              resourceName={{singular: 'todo', plural: 'todos'}}
-              itemCount={todos.length}
-              selectedItemsCount={selectedResources.length}
-              onSelectionChange={handleSelectionChange}
-              headings={[{title: 'Title'}]}
-              loading={loading}
-            >
-              {todos.map(({id, title}, index) => (
-                <IndexTable.Row
-                  id={id}
-                  key={id}
-                  position={index}
-                  selected={selectedResources.includes(id)}
-                >
-                  <IndexTable.Cell>
-                    <TextStyle variation="strong">{title}</TextStyle>
-                  </IndexTable.Cell>
-                </IndexTable.Row>
-              ))}
-            </IndexTable>
-          </Card>
+          <Card>a</Card>
         </Layout.Section>
       </Layout>
     </Page>

@@ -16,3 +16,8 @@ export async function getListNewNotifications() {
   });
   return data;
 }
+
+export async function addNotification() {
+  await collection.add({});
+  return {success: true};
+}

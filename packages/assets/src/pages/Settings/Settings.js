@@ -8,46 +8,32 @@ import SelectExample from '@assets/components/SelectInput';
 import MultilineFieldExample from '@assets/components/TextField';
 import '../../App.css';
 import useFetchApi from '@assets/hooks/api/useFetchApi';
-import {defaultSettings, desktopPositions} from '@assets/config/settingsConfig';
+import {defaultSettings, desktopPositions, tabs} from '@assets/config/settingsConfig';
 import useEditApi from '@assets/hooks/api/useEditApi';
 
 /**
  * @return {JSX.Element}
  */
 export default function Settings() {
-  const {data: input, setData: setInput, loading, setLoading} = useFetchApi({
+  const {data: input, setData: setInput} = useFetchApi({
     url: '/settings',
     defaultData: defaultSettings
   });
-  const {editing, handleEdit} = useEditApi({
+  const {handleEdit} = useEditApi({
     url: '/settings'
   });
   const handleChangeInput = (key, value) => {
     const updatedSettings = {...input, [key]: value};
     setInput(updatedSettings);
   };
-
   const handleSave = async () => {
     try {
-      const success = await handleEdit(input);
+      await handleEdit(input);
     } catch (error) {
       console.error('Error', error);
     }
   };
 
-  const tabs = [
-    {
-      id: 'display-tab',
-      content: 'Display',
-      accessibilityLabel: 'All customers',
-      panelID: 'all-customers-content-1'
-    },
-    {
-      id: 'triggers-tab',
-      content: 'Triggers',
-      panelID: 'accepts-marketing-content-1'
-    }
-  ];
   const [selected, setSelected] = useState(0);
 
   const handleTabChange = useCallback(selectedTabIndex => setSelected(selectedTabIndex), []);
@@ -150,7 +136,7 @@ export default function Settings() {
                 </React.Fragment>
               )}
               {selected === 1 && (
-                <React.Fragment>
+                <Card.Section title="PAGE RESTRICTION">
                   <SelectExample
                     value={input.allowShow}
                     onChange={value => handleChangeInput('allowShow', value)}
@@ -171,7 +157,7 @@ export default function Settings() {
                       onChange={value => handleChangeInput('excludeUrls', value)}
                     />
                   </FormLayout>
-                </React.Fragment>
+                </Card.Section>
               )}
             </Tabs>
           </Card>

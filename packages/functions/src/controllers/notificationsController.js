@@ -1,4 +1,7 @@
-import {getListNewNotifications} from '@functions/repositories/notificationRepository';
+import {
+  addNotification,
+  getListNewNotifications
+} from '@functions/repositories/notificationRepository';
 
 export async function getListNotifications(ctx) {
   try {
@@ -12,4 +15,5 @@ export async function getListNotifications(ctx) {
 
 export async function addNewNotification(ctx) {
   console.log('1231');
+  await addNotification();
 }

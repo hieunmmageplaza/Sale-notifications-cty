@@ -20,7 +20,7 @@ export const desktopPositions = [
   {position: TOP_RIGHT}
 ];
 
-const tabs = [
+export const tabs = [
   {
     id: 'display-tab',
     content: 'Display',

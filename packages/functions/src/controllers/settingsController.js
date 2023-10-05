@@ -4,6 +4,8 @@ import {
   updateSettingsData
 } from '@functions/repositories/settingsRepository';
 import {getCurrentShop} from '@functions/helpers/auth';
+import {defaultSettings} from '@functions/const/defaultSetting';
+import {getShopByDomain, getShopbyDomain} from '@functions/repositories/shopRepository';
 
 export async function updateSettingByDocId(ctx) {
   const data = ctx.req.body;
@@ -25,13 +27,13 @@ export async function getSetting(ctx) {
   }
 }
 
-export async function setTheDefaultSettings(ctx) {
+export async function setTheDefaultSettings(shopInfo, ctx) {
   try {
-    console.log('testtttt121325');
-    const shopId = getCurrentShop(ctx);
-    const defaultData = {};
-    const data = await setTheDefaultData(shopId, defaultData);
-    ctx.body = {data, success: true};
+    const shopId = shopInfo.id;
+    const defaultData = {...defaultSettings, shopId: shopId};
+    await setTheDefaultData(defaultData);
+
+    ctx.body = {success: true};
   } catch (error) {
     ctx.body = {error: 'Internal server error', success: false};
   }

@@ -22,7 +22,7 @@ export async function getSettingByShopId(shopId) {
   return presentDataAndFormatDate(doc);
 }
 
-export async function setTheDefaultData(shopId, defaultData) {
+export async function setTheDefaultData(defaultData) {
   await collection.add(defaultData);
   return {success: true};
 }
