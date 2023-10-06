@@ -18,12 +18,23 @@ export async function getListNewNotifications() {
 }
 
 export async function addNotification(notificationsData) {
-  // const batch = writeBatch(firestore);
-  // const newNotificationRef = doc(collection);
-  // batch.set(newNotificationRef, notificationsData);
-  // await batch.commit();
+  const batch = writeBatch(firestore);
+  const newNotificationRef = doc(collection);
+  batch.set(newNotificationRef, notificationsData);
+  await batch.commit();
 
   console.log('Notification added:');
+
+  return {success: true};
+}
+
+export async function addNotifications(notifications) {
+  const batch = firestore.batch();
+
+  notifications.forEach(notification => {
+    batch.set(collection.doc(), notification);
+  });
+  await batch.commit();
 
   return {success: true};
 }

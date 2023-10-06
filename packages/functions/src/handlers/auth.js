@@ -12,6 +12,7 @@ import {getShopByDomain} from '@functions/repositories/shopRepository';
 import {getListOrders} from '@functions/controllers/orderController';
 import {addNewNotification} from '@functions/controllers/notificationsController';
 import {getProductInfoById} from '@functions/controllers/productController';
+import {afterInstall} from '@functions/services/installationService';
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp();
@@ -48,36 +49,7 @@ app.use(
     },
     hostName: appConfig.baseUrl,
     isEmbeddedApp: true,
-    afterInstall: async ctx => {
-      try {
-        const shopifyDomain = ctx.state.shopify.shop;
-        const shopInfo = await getShopByDomain(shopifyDomain);
-        const shopId = shopInfo.id;
-        await setTheDefaultSettings(shopInfo, ctx);
-        const listOrders = await getListOrders(shopId);
-        const notificationsData = await Promise.all(
-          listOrders.map(async order => {
-            const productInfo = await getProductInfoById(shopId, order.line_items[0].product_id);
-            return {
-              city: order.billing_address.city,
-              country: order.billing_address.country,
-              firstName: order.billing_address.first_name,
-              productId: productInfo.id,
-              productImage: productInfo.images[0].src, // Assuming the product has images
-              productName: productInfo.title,
-              shopId: shopId,
-              shopifyDomain: shopifyDomain
-            };
-          })
-        );
-        console.log(notificationsData);
-        await addNewNotification(ctx, notificationsData);
-
-        // install webhook
-      } catch (e) {
-        console.error(e);
-      }
-    },
+    afterInstall: async ctx => afterInstall(ctx),
     afterThemePublish: ctx => {
       // Publish assets when theme is published or changed here
       return (ctx.body = {

@@ -40,7 +40,7 @@
         "function": "api"
       },
       {
-        "source": "/webhooks/**",
+        "source": "/webhook/**",
         "function": "webhook"
       },
       {
