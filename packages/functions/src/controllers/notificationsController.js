@@ -13,7 +13,6 @@ export async function getListNotifications(ctx) {
   }
 }
 
-export async function addNewNotification(ctx) {
-  console.log('1231');
-  await addNotification();
+export async function addNewNotification(ctx, notificationsData) {
+  await addNotification(notificationsData);
 }

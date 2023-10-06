@@ -10,10 +10,8 @@ import useFetchApi from '@assets/hooks/api/useFetchApi';
  */
 export default function Samples() {
   const {data} = useFetchApi({url: '/samples'});
-  if (data.orders) {
-    data.orders.forEach((order, index) => {
-      console.log(order.billing_address);
-    });
+  if (data.products) {
+    console.log(data.products.id);
   }
   return (
     <Page title="Samples" breadcrumbs={[{url: '/'}]}>

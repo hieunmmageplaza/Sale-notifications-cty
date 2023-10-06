@@ -1,5 +1,5 @@
 import {Firestore} from '@google-cloud/firestore';
-
+import {writeBatch, doc} from 'firebase/firestore';
 const firestore = new Firestore();
 /** @type CollectionReference */
 const collection = firestore.collection('notifications');
@@ -17,7 +17,13 @@ export async function getListNewNotifications() {
   return data;
 }
 
-export async function addNotification() {
-  await collection.add({});
+export async function addNotification(notificationsData) {
+  // const batch = writeBatch(firestore);
+  // const newNotificationRef = doc(collection);
+  // batch.set(newNotificationRef, notificationsData);
+  // await batch.commit();
+
+  console.log('Notification added:');
+
   return {success: true};
 }

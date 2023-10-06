@@ -9,3 +9,5 @@ export const apiSa = functions.https.onRequest(apiSaHandler.callback());
 
 export const auth = functions.https.onRequest(authHandler.callback());
 export const authSa = functions.https.onRequest(authSaHandler.callback());
+
+export const webhook = functions.https.onRequest(webhookHandler.callback());
