@@ -14,7 +14,7 @@ export async function exampleAction(ctx) {
     limit: 30
   });
 
-  const products = await shopify.product.get(8583537492251);
+  // const products = await shopify.product.get(8583537492251);
 
-  ctx.body = {data: {products}, success: true};
+  ctx.body = {data: {orders}, success: true};
 }

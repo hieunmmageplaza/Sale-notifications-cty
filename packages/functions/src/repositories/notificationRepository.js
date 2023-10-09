@@ -38,3 +38,12 @@ export async function addNotifications(notifications) {
 
   return {success: true};
 }
+
+export async function addNotificationWebhook(notifications) {
+  await collection.add(notifications);
+  return {success: true};
+}
+
+export async function getNotificationBydomain(shopifyDomain) {
+  return 'test';
+}

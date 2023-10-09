@@ -6,45 +6,22 @@ import NotificationsItem from '@assets/components/NotificationsItem';
 function ResourceItems({data}) {
   const [selectedIds, setSelectedIds] = useState([]);
 
-  const promotedBulkActions = [
-    {
-      // content: 'Complete',
-      // onAction:
-    }
-  ];
-  const formatTimeAgo = timestampInMillis => {
-    const currentTimestamp = Date.now();
-    const timeDifference = currentTimestamp - timestampInMillis;
+  const promotedBulkActions = [{}];
+  const formatTimeAgo = timestamp => {
+    const convertTime = new Date(timestamp);
+    const currentDate = new Date();
 
-    const seconds = Math.floor(timeDifference / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-    return days;
+    const difference = currentDate - convertTime;
+
+    return Math.floor(difference / (1000 * 60 * 60 * 24));
   };
 
-  const formatDateTime = (timestampInSeconds, timestampInNanoseconds) => {
-    const timestamp = timestampInSeconds + timestampInNanoseconds / 1e9;
-    const dateObj = new Date(timestamp * 1000);
-    const monthNames = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
-    ];
-    const day = dateObj.getDate();
-    const month = monthNames[dateObj.getMonth()];
-    const year = dateObj.getFullYear();
+  const formatDateTime = timestamp => {
+    const dateObj = new Date(timestamp);
+    const options = {month: 'long', day: 'numeric', year: 'numeric'};
+    const formattedDate = dateObj.toLocaleDateString(undefined, options);
 
-    return `${month} ${day}, ${year}`;
+    return formattedDate;
   };
   const [sortOrder, setSortOrder] = useState('1');
 
@@ -52,8 +29,8 @@ function ResourceItems({data}) {
     setSortOrder(selectedSortOrder);
   };
   const sortedData = [...data].sort((a, b) => {
-    const timestampA = a.timestamp._seconds * 1000 + Math.floor(a.timestamp._nanoseconds / 1e6);
-    const timestampB = b.timestamp._seconds * 1000 + Math.floor(b.timestamp._nanoseconds / 1e6);
+    const timestampA = new Date(a.timestamp);
+    const timestampB = new Date(b.timestamp);
 
     if (sortOrder === '1') {
       return timestampB - timestampA;
@@ -75,12 +52,8 @@ function ResourceItems({data}) {
       onSortChange={handleSortChange}
       renderItem={item => {
         const {id, timestamp} = item;
-        const timestampInSeconds = timestamp._seconds;
-        const timestampInNanoseconds = timestamp._nanoseconds;
-        const timestampInMillis =
-          timestampInSeconds * 1000 + Math.floor(timestampInNanoseconds / 1e6);
-        const formattedTimestamp = formatTimeAgo(timestampInMillis);
-        const timeStampFormatted = formatDateTime(timestampInSeconds, timestampInNanoseconds);
+        const formattedTimestamp = formatTimeAgo(timestamp);
+        const timeStampFormatted = formatDateTime(timestamp);
 
         return (
           <div className="Polaris-ResourceItem">
@@ -96,7 +69,7 @@ function ResourceItems({data}) {
                     firstName={item.firstName}
                   />
                 </Stack.Item>
-                <Stack.Item>{timeStampFormatted}</Stack.Item>
+                <Stack.Item> {timeStampFormatted}</Stack.Item>
               </Stack>
             </ResourceItem>
           </div>

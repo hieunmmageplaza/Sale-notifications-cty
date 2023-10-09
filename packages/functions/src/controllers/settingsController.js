@@ -32,7 +32,7 @@ export async function setTheDefaultSettings(shopInfo, ctx) {
     const shopId = shopInfo.id;
     const defaultData = {...defaultSettings, shopId: shopId};
     await setTheDefaultData(defaultData);
-
+    console.log('setTheDefaultData done');
     ctx.body = {success: true};
   } catch (error) {
     ctx.body = {error: 'Internal server error', success: false};

@@ -7,11 +7,8 @@ import path from 'path';
 import createErrorHandler from '@functions/middleware/errorHandler';
 import firebase from 'firebase-admin';
 import appConfig from '@functions/config/app';
-import settingsController, {setTheDefaultSettings} from '@functions/controllers/settingsController';
 import {getShopByDomain} from '@functions/repositories/shopRepository';
-import {getListOrders} from '@functions/controllers/orderController';
 import {addNewNotification} from '@functions/controllers/notificationsController';
-import {getProductInfoById} from '@functions/controllers/productController';
 import {afterInstall} from '@functions/services/installationService';
 
 if (firebase.apps.length === 0) {

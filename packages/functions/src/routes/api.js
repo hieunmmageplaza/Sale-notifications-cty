@@ -6,8 +6,6 @@ import * as appNewsController from '@functions/controllers/appNewsController';
 import {getApiPrefix} from '@functions/const/app';
 import * as notificationsController from '@functions/controllers/notificationsController';
 import * as settingsController from '@functions/controllers/settingsController';
-import * as ordersController from '@functions/controllers/orderController';
-import {getListNotifications, getListOrders} from '@functions/controllers/orderController';
 
 export default function apiRouter(isEmbed = false) {
   const router = new Router({prefix: getApiPrefix(isEmbed)});
@@ -21,7 +19,6 @@ export default function apiRouter(isEmbed = false) {
   router.get('/settings', settingsController.getSetting);
   router.put('/settings', settingsController.updateSettingByDocId);
   router.post('/settings', settingsController.setTheDefaultSettings);
-  router.get('/orders', ordersController.getListOrders);
 
   return router;
 }
