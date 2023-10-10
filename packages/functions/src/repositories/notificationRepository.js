@@ -1,5 +1,6 @@
 import {Firestore} from '@google-cloud/firestore';
 import {writeBatch, doc} from 'firebase/firestore';
+import {presentDataAndFormatDate} from '@avada/firestore-utils';
 const firestore = new Firestore();
 /** @type CollectionReference */
 const collection = firestore.collection('notifications');
@@ -44,6 +45,15 @@ export async function addNotificationWebhook(notifications) {
   return {success: true};
 }
 
-export async function getNotificationBydomain(shopifyDomain) {
-  return 'test';
+export async function getNotificationByDomain(shopifyDomain) {
+  const docs = await collection
+    .orderBy('timestamp', 'desc')
+    .where('shopifyDomain', '==', shopifyDomain)
+    .get();
+  if (docs.empty) {
+    return null;
+  }
+  const [doc] = docs.docs;
+
+  return presentDataAndFormatDate(doc);
 }

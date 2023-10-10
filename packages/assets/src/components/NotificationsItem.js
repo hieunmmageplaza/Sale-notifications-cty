@@ -13,7 +13,7 @@ function NotificationsItem({city, country, productName, productImage, timeStamp}
         <div className="middle">
           <h3>{city + ',' + country}</h3>
           <b>{productName}</b>
-          <p>{timeStamp + ' '} days ago</p>
+          <p>{timeStamp}</p>
         </div>
         <div className="right">
           <button className="top-button">x</button>
