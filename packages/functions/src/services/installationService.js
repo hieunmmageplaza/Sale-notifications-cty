@@ -1,6 +1,5 @@
 import {getShopByDomain} from '@functions/repositories/shopRepository';
-import {initShopify} from '@functions/services/shopifyService';
-import {getShopById} from '@avada/shopify-auth';
+import {initNewShopify, initShopify} from '@functions/services/shopifyService';
 import {addNotifications} from '@functions/repositories/notificationRepository';
 import {setTheDefaultSettings} from '@functions/controllers/settingsController';
 
@@ -8,12 +7,12 @@ export async function afterInstall(ctx) {
   try {
     const shopifyDomain = ctx.state.shopify.shop;
     const shopInfo = await getShopByDomain(shopifyDomain);
+
     const shopId = shopInfo.id;
-    const shopData = await getShopById(shopId);
-
-    // await setTheDefaultSettings(shopInfo, ctx);
-
-    const shopify = initShopify(shopData);
+    const shopify = initNewShopify({
+      accessToken: shopInfo.accessToken,
+      shopifyDomain: shopifyDomain
+    });
 
     const listOrders = await shopify.order.list({
       status: 'open',
@@ -37,9 +36,13 @@ export async function afterInstall(ctx) {
       })
     );
 
-    await addNotifications(notifications);
-
-    // install webhook
+    await Promise.all([
+      // add default setting
+      setTheDefaultSettings(shopInfo, ctx),
+      // sync notification
+      addNotifications(notifications)
+      // install webhook
+    ]);
   } catch (e) {
     console.error(e);
   }

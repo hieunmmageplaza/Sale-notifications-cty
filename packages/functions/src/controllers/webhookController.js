@@ -1,6 +1,5 @@
 import {getShopByDomain} from '@functions/repositories/shopRepository';
-import {initShopify} from '@functions/services/shopifyService';
-import {getShopById} from '@avada/shopify-auth';
+import {initNewShopify} from '@functions/services/shopifyService';
 import {addNotificationWebhook} from '@functions/repositories/notificationRepository';
 export async function listenNewOrder(ctx) {
   try {
@@ -8,8 +7,11 @@ export async function listenNewOrder(ctx) {
     const orderData = ctx.req.body;
 
     const shopInfo = await getShopByDomain(shopifyDomain);
-    const shopData = await getShopById(shopInfo.id);
-    const shopify = initShopify(shopData);
+
+    const shopify = initNewShopify({
+      accessToken: shopInfo.accessToken,
+      shopifyDomain: shopifyDomain
+    });
 
     const productInfo = await shopify.product.get(orderData.line_items[0].product_id);
     const notifications = {

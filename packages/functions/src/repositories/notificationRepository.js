@@ -47,13 +47,15 @@ export async function addNotificationWebhook(notifications) {
 
 export async function getNotificationByDomain(shopifyDomain) {
   const docs = await collection
-    .orderBy('timestamp', 'desc')
     .where('shopifyDomain', '==', shopifyDomain)
+    .orderBy('timestamp', 'desc')
     .get();
   if (docs.empty) {
     return null;
   }
-  const [doc] = docs.docs;
-
-  return presentDataAndFormatDate(doc);
+  const notifications = [];
+  docs.forEach(doc => {
+    notifications.push(presentDataAndFormatDate(doc));
+  });
+  return notifications;
 }
