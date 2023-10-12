@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  border: 1px solid #ddd;
+  border-radius: 15%;
+  max-width:400px;
+}
+
+.left-column {
+  flex: 0 0 100px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  min-width: 120px;
+}
+
+.right-column {
+  flex: 1;
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}

@@ -9,6 +9,6 @@ const Shopify = require('shopify-api-node');
 
   // await shopify.scriptTag.create({
   //   event: 'onload',
-  //   src: 'https://localhost:3000/scripttag/avada-sale-pop.min.js'
+  //   src: 'https://localhost:3000/scripttag/index.min.js'
   // });
 })();

@@ -1,6 +1,5 @@
 import {render} from 'https://esm.sh/preact';
-import Notifications from '../components/Notifications';
-import NotificationsPopup from '../components/NotificationsPopup';
+import NotificationsPopup from '../components/NotificationPopup/NotificationsPopup';
 
 export default class DisplayManager {
   constructor() {
@@ -11,8 +10,7 @@ export default class DisplayManager {
   initialize({notifications, settings}) {
     this.insertContainer();
     const container = document.querySelector('#Avada-SalePop');
-    // eslint-disable-next-line react/react-in-jsx-scope
-    render(<Notifications />, container);
+    render(<NotificationsPopup />, container);
   }
 
   fadeOut() {
@@ -32,7 +30,8 @@ export default class DisplayManager {
     popupEl.classList.add('Avada-SalePop__OuterWrapper');
     const targetEl = document.querySelector('body').firstChild;
     if (targetEl) {
-      insertAfter(popupEl, targetEl);
+      // insertAfter(popupEl, targetEl);
+      targetEl.append(popupEl);
     }
     return popupEl;
   }

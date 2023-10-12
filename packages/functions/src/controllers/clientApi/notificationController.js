@@ -8,9 +8,11 @@ export async function list(ctx) {
     const shopId = notifications[0]['shopId'];
     const setting = await getSettingByShopId(shopId);
     const maxPopUpDisplay = setting.maxPopsDisplay;
-    const timestamp = notifications.timestamp;
 
-    notifications.timestamp = formatTimeAgo(timestamp);
+    notifications.forEach(notification => {
+      const timestamp = notification.timestamp;
+      notification.timestamp = formatTimeAgo(timestamp);
+    });
 
     return (ctx.body = {
       notifications: notifications.slice(0, maxPopUpDisplay),

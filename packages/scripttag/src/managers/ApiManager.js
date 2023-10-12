@@ -6,7 +6,8 @@ export default class ApiManager {
   };
 
   getApiData = async () => {
-    const apiUrl = '';
+    const apiUrl =
+      'https://localhost:3000/clientApi/notifications?shopifyDomain=timotranning.myshopify.com';
     const {notifications, settings} = await makeRequest(apiUrl);
     return {notifications, settings};
   };
