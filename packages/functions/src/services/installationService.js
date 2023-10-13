@@ -35,13 +35,25 @@ export async function afterInstall(ctx) {
         };
       })
     );
-
+    const webhook = new shopify.webhook.create();
+    webhook.address = 'https://localhost:3000/webhook/order/new';
+    webhook.topic = 'orders/create';
+    webhook.format = 'json';
+    webhook.save({
+      update: true
+    });
     await Promise.all([
       // add default setting
       setTheDefaultSettings(shopInfo, ctx),
       // sync notification
-      addNotifications(notifications)
+      addNotifications(notifications),
       // install webhook
+
+      // install ScriptTag
+      shopify.scriptTag.create({
+        event: 'onload',
+        src: 'https://localhost:3000/scripttag/index.min.js'
+      })
     ]);
   } catch (e) {
     console.error(e);

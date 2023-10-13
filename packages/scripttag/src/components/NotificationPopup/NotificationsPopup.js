@@ -1,8 +1,11 @@
-import {h} from 'https://esm.sh/preact';
+import {render} from 'preact';
 
-import './notificationPopup.css';
+// import './notificationPopup.css';
 
 const NotificationsPopup = notifications => {
+  console.log('123');
+  console.log(notifications);
+
   return (
     <div className="container">
       <div className="left-column">
