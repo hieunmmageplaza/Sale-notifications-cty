@@ -1,94 +1,160 @@
-import {render} from 'preact';
-import NotificationsPopup from '../components/NotificationPopup/NotificationsPopup';
 // import '../components/NotificationPopup/notificationPopup.css';
 
 export default class DisplayManager {
   constructor() {
     this.notifications = [];
     this.settings = [];
+    this.popupFrames = [];
   }
 
   initialize({notifications, settings}) {
-    this.insertContainer();
+    this.insertContainer(settings);
     const container = document.querySelector('#Avada-SalePop');
-    container.appendChild(this.createPopUpFrame());
-    // // eslint-disable-next-line react/react-in-jsx-scope
-    // render(<NotificationsPopup {...notifications} />, container);
+
+    for (let i = 0; i < notifications.length; i++) {
+      this.popupFrames.push(this.createPopUpFrame(notifications[i]));
+    }
+    // this.showPopUp(settings);
+    container.appendChild(this.popupFrames[1]);
+    this.insertCSS();
+
+    this.applySettingsForPopup(settings);
   }
 
-  fadeOut() {
+  showPopUp(settings) {
+    let index = 0;
+    const displayDuration = settings.displayDuration * 1000;
+    const firstDelay = settings.firstDelay * 1000;
     const container = document.querySelector('#Avada-SalePop');
-    container.innerHTML = '';
+    setTimeout(() => {
+      const intervalId = setInterval(() => {
+        container.innerHTML = '';
+        if (index < this.popupFrames.length) {
+          container.appendChild(this.popupFrames[index]);
+          this.insertCSS();
+          index++;
+        } else {
+          clearInterval(intervalId);
+          setTimeout(() => {
+            container.innerHTML = '';
+          }, displayDuration);
+        }
+      }, displayDuration);
+    }, 1);
   }
 
-  createPopUpFrame() {
+  insertContainer(settings) {
+    const popupEl = document.createElement('div');
+    popupEl.id = 'Avada-SalePop';
+    popupEl.classList.add('Avada-SalePop__OuterWrapper');
+    popupEl.style.position = 'fixed';
+    popupEl.style.zIndex = '1000';
+    popupEl.style.transform = 'translate(-1%, -3%)';
+    switch (settings.position) {
+      case 'bottom-left':
+        popupEl.style.bottom = '0';
+        popupEl.style.left = '0';
+        break;
+      case 'bottom-right':
+        popupEl.style.bottom = '0';
+        popupEl.style.right = '0';
+        break;
+      case 'top-left':
+        popupEl.style.top = '0';
+        popupEl.style.left = '0';
+        break;
+      case 'top-right':
+        popupEl.style.top = '0';
+        popupEl.style.right = '0';
+        break;
+    }
+
+    const targetEl = document.querySelector('body');
+    if (targetEl) {
+      targetEl.style.position = 'relative';
+      targetEl.prepend(popupEl);
+    }
+  }
+
+  applySettingsForPopup(settings) {
+    const customerSeccondLine = document.querySelector(
+      '#Avada-SalePop .container .right-column .Customer-information-line-2'
+    );
+    const customerThirdLine = document.querySelector(
+      '#Avada-SalePop .container .right-column .Customer-information-line-3'
+    );
+
+    if (settings.truncateProductName) {
+      customerSeccondLine.classList.add('truncate');
+    }
+
+    if (settings.hideTimeAgo) {
+      customerThirdLine.classList.add('hide');
+    }
+  }
+
+  createPopUpFrame(notification) {
     // Create container div
     const containerDiv = document.createElement('div');
     containerDiv.className = 'container';
-    containerDiv.style.display = 'flex';
-    containerDiv.style.border = '1px solid #ddd';
-    containerDiv.style.borderRadius = '15px';
-    containerDiv.style.maxWidth = '400px';
 
     // Create left-column div
     const leftColumnDiv = document.createElement('div');
     leftColumnDiv.className = 'left-column';
-    leftColumnDiv.style.flex = '0 0 100px';
-    leftColumnDiv.style.justifyContent = 'center';
-    leftColumnDiv.style.alignItems = 'center';
-    leftColumnDiv.style.display = 'flex';
-    leftColumnDiv.style.minWidth = '120px';
 
     // Create image element
     const imageElement = document.createElement('img');
-    imageElement.src =
-      'https://cdn.shopify.com/s/files/1/0825/2578/2299/files/Main.jpg?v=1694662733';
-    imageElement.style.maxWidth = '100%';
-    imageElement.style.height = 'auto';
-    imageElement.style.display = 'block';
-
+    imageElement.src = notification.productImage;
     // Append image to left-column div
     leftColumnDiv.appendChild(imageElement);
 
     // Create right-column div
     const rightColumnDiv = document.createElement('div');
     rightColumnDiv.className = 'right-column';
-    rightColumnDiv.style.flex = '1';
-    rightColumnDiv.style.boxSizing = 'border-box';
 
     // Create paragraphs for right-column div
-    const paragraphs = [
-      'Steve in Shippington, United States',
-      'Purchased The Collection Snowboard: Hydrogen',
-      'a day ago'
-    ];
+    const firstLine = `${notification.firstName} in ${notification.city}, ${notification.country}`;
+    const secondLine = `Purchased ${notification.productName}`;
+    const thirdLine = notification.timestamp;
+    const paragraphs = [firstLine, secondLine, thirdLine];
 
-    paragraphs.forEach(text => {
+    paragraphs.forEach((text, index) => {
       const paragraph = document.createElement('p');
       paragraph.textContent = text;
+      paragraph.classList.add(`Customer-information-line-${index + 1}`);
       rightColumnDiv.appendChild(paragraph);
+      paragraph.style.margin = '0';
+      paragraph.style.padding = '0';
     });
 
-    // Append left-column and right-column to container div
     containerDiv.appendChild(leftColumnDiv);
     containerDiv.appendChild(rightColumnDiv);
 
-    // Append container div to the body or any other desired parent element
     return containerDiv;
   }
+  insertCSS() {
+    const containerDiv = document.querySelector('#Avada-SalePop .container');
+    containerDiv.style.display = 'flex';
+    containerDiv.style.border = '1px solid #ddd';
+    containerDiv.style.borderRadius = '15px';
+    containerDiv.style.maxWidth = '400px';
+    containerDiv.style.backgroundColor = 'white';
 
-  insertContainer() {
-    const popupEl = document.createElement('div');
-    popupEl.id = 'Avada-SalePop';
-    popupEl.classList.add('Avada-SalePop__OuterWrapper');
-    popupEl.style.position = 'absolute';
-    popupEl.style.top = '0';
-    popupEl.style.left = '0';
+    const leftColumnDiv = document.querySelector('#Avada-SalePop .left-column');
+    leftColumnDiv.style.flex = '0 0 100px';
+    leftColumnDiv.style.justifyContent = 'center';
+    leftColumnDiv.style.alignItems = 'center';
+    leftColumnDiv.style.display = 'flex';
+    leftColumnDiv.style.minWidth = '120px';
 
-    const targetEl = document.querySelector('body').firstChild;
-    targetEl.style.position = 'relative';
-    if (targetEl) {
-      targetEl.append(popupEl);
-    }
+    const imageElement = document.querySelector('#Avada-SalePop img');
+
+    imageElement.style.maxWidth = '90%';
+    imageElement.style.height = 'auto';
+    imageElement.style.display = 'block';
+
+    const rightColumnDiv = document.querySelector('#Avada-SalePop .right-column');
+    rightColumnDiv.style.flex = '1';
+    rightColumnDiv.style.boxSizing = 'border-box';
   }
 }

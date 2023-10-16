@@ -3,6 +3,12 @@
   border: 1px solid #ddd;
   border-radius: 15px;
   max-width:400px;
+  background-color: white;
+}
+
+.container p {
+  margin: 0;
+  padding: 0;
 }
 
 .left-column {
@@ -19,7 +25,18 @@
 }
 
 img {
-  max-width: 100%;
+  max-width: 90%;
   height: auto;
   display: block;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px;
+}
+
+.hide {
+  display: none;
 }
