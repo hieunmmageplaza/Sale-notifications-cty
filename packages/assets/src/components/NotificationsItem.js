@@ -1,26 +1,22 @@
 import React from 'react';
 import {TickMinor} from '@shopify/polaris-icons';
 import {Icon} from '@shopify/polaris';
+import './NotificationItem.css';
 
 // eslint-disable-next-line react/prop-types
-function NotificationsItem({city, country, productName, productImage, timeStamp}) {
+function NotificationsItem({city, country, productName, productImage, timeStamp, firstName}) {
   return (
     <>
-      <div className="Polaris-NotificationsItem container">
-        <div className="left">
-          <img src={productImage} alt="Hình ảnh" width="100%" />
+      <div className="container">
+        <div className="left-column">
+          <img src={productImage} alt="Your Image" />
         </div>
-        <div className="middle">
-          <h3>{city + ',' + country}</h3>
-          <b>{productName}</b>
+        <div className="right-column">
+          <p>
+            {firstName} in {city},{country}
+          </p>
+          <p className="truncate">Purchased {productName}</p>
           <p>{timeStamp}</p>
-        </div>
-        <div className="right">
-          <button className="top-button">x</button>
-          <div className="bottom-button">
-            By Avada
-            <Icon source={TickMinor} color="base" />
-          </div>
         </div>
       </div>
     </>

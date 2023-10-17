@@ -17,7 +17,6 @@ export default class DisplayManager {
     // this.showPopUp(settings);
     container.appendChild(this.popupFrames[1]);
     this.insertCSS();
-
     this.applySettingsForPopup(settings);
   }
 
@@ -67,6 +66,9 @@ export default class DisplayManager {
         popupEl.style.top = '0';
         popupEl.style.right = '0';
         break;
+      default:
+        popupEl.style.bottom = '0';
+        popupEl.style.left = '0';
     }
 
     const targetEl = document.querySelector('body');
@@ -112,6 +114,16 @@ export default class DisplayManager {
     const rightColumnDiv = document.createElement('div');
     rightColumnDiv.className = 'right-column';
 
+    // Create close button
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'x';
+    closeButton.classList.add('close-button');
+    closeButton.addEventListener('click', () => {
+      this.fadeOut();
+    });
+
+    rightColumnDiv.appendChild(closeButton);
+
     // Create paragraphs for right-column div
     const firstLine = `${notification.firstName} in ${notification.city}, ${notification.country}`;
     const secondLine = `Purchased ${notification.productName}`;
@@ -131,6 +143,11 @@ export default class DisplayManager {
     containerDiv.appendChild(rightColumnDiv);
 
     return containerDiv;
+  }
+
+  fadeOut() {
+    const container = document.querySelector('#Avada-SalePop');
+    container.innerHTML = '';
   }
   insertCSS() {
     const containerDiv = document.querySelector('#Avada-SalePop .container');
@@ -156,5 +173,13 @@ export default class DisplayManager {
     const rightColumnDiv = document.querySelector('#Avada-SalePop .right-column');
     rightColumnDiv.style.flex = '1';
     rightColumnDiv.style.boxSizing = 'border-box';
+
+    const closeButton = document.querySelector('#Avada-SalePop .close-button');
+    closeButton.style.position = 'absolute';
+    closeButton.style.top = '8px';
+    closeButton.style.right = '10px';
+    closeButton.style.background = 'white';
+    closeButton.style.border = '0';
+    closeButton.style.cursor = 'pointer';
   }
 }

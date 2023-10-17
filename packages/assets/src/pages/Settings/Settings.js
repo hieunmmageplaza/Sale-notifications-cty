@@ -54,8 +54,9 @@ export default function Settings() {
             city="HoChiMinh"
             country="VietNam"
             productName="Fusion Backpack"
-            timeStamp="10"
+            timeStamp="10 days ago"
             productImage="https://burst.shopifycdn.com/photos/tucan-scarf_373x@2x.jpg"
+            firstName="Timo"
           />
         </Layout.Section>
         <Layout.Section>
