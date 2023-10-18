@@ -14,8 +14,8 @@ export default class DisplayManager {
     for (let i = 0; i < notifications.length; i++) {
       this.popupFrames.push(this.createPopUpFrame(notifications[i]));
     }
-    // this.showPopUp(settings);
-    container.appendChild(this.popupFrames[1]);
+    this.showPopUp(settings);
+    // container.appendChild(this.popupFrames[1]);
     this.insertCSS();
     this.applySettingsForPopup(settings);
   }
@@ -124,7 +124,6 @@ export default class DisplayManager {
 
     rightColumnDiv.appendChild(closeButton);
 
-    // Create paragraphs for right-column div
     const firstLine = `${notification.firstName} in ${notification.city}, ${notification.country}`;
     const secondLine = `Purchased ${notification.productName}`;
     const thirdLine = notification.timestamp;
@@ -134,6 +133,7 @@ export default class DisplayManager {
       const paragraph = document.createElement('p');
       paragraph.textContent = text;
       paragraph.classList.add(`Customer-information-line-${index + 1}`);
+
       rightColumnDiv.appendChild(paragraph);
       paragraph.style.margin = '0';
       paragraph.style.padding = '0';

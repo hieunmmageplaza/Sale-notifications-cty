@@ -35,19 +35,20 @@ export async function afterInstall(ctx) {
         };
       })
     );
-    const webhook = new shopify.webhook.create();
-    webhook.address = 'https://localhost:3000/webhook/order/new';
-    webhook.topic = 'orders/create';
-    webhook.format = 'json';
-    webhook.save({
-      update: true
-    });
+
     await Promise.all([
       // add default setting
       setTheDefaultSettings(shopInfo, ctx),
+
       // sync notification
       addNotifications(notifications),
+
       // install webhook
+      shopify.webhook.create({
+        address: 'https://localhost:3000/webhook/order/new',
+        topic: 'orders/create',
+        format: 'json'
+      }),
 
       // install ScriptTag
       shopify.scriptTag.create({
