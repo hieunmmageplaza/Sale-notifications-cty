@@ -1,7 +1,7 @@
 // import '../components/NotificationPopup/notificationPopup.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import NotificationsPopup from '@avada/assets/src/components/NotificationsItem';
+import NotificationsPopup from '../components/NotificationPopup/NotificationsPopup';
 
 export default class DisplayManager {
   constructor() {
@@ -19,13 +19,40 @@ export default class DisplayManager {
     }
     // this.showPopUp(settings);
     // container.appendChild(this.popupFrames[1]);
-
-    ReactDOM.render(<NotificationsPopup />, container);
+    // this.displayPopup(settings, notifications);
+    // ReactDOM.render(
+    //   <NotificationsPopup notifications={notifications[0]} settings={settings} />,
+    //   container
+    // );
     this.insertCSS();
     this.applySettingsForPopup(settings);
   }
+  displayPopup(settings, notifications) {
+    let index = 0;
+    const displayDuration = settings.displayDuration * 1000;
+    const firstDelay = settings.firstDelay * 1000;
+    const container = document.querySelector('#Avada-SalePop');
+    setTimeout(() => {
+      const intervalId = setInterval(() => {
+        container.innerHTML = '';
+        if (index < notifications.length) {
+          ReactDOM.render(
+            <NotificationsPopup notifications={notifications[index]} settings={settings} />,
+            container
+          );
+          this.insertCSS();
+          index++;
+        } else {
+          clearInterval(intervalId);
+          setTimeout(() => {
+            container.innerHTML = '';
+          }, displayDuration);
+        }
+      }, displayDuration);
+    }, 1);
+  }
 
-  showPopUp(settings) {
+  showPopUp(settings, notifications) {
     let index = 0;
     const displayDuration = settings.displayDuration * 1000;
     const firstDelay = settings.firstDelay * 1000;

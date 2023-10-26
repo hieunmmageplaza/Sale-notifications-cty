@@ -1,0 +1,62 @@
+$border-color: #ddd;
+$border-radius: 15px;
+$max-width: 400px;
+$background-color: white;
+
+body {
+  position: relative;
+
+  div#Avada-SalePop {
+    .container {
+      display: flex;
+      border: 1px solid $border-color;
+      border-radius: $border-radius;
+      max-width: $max-width;
+      background-color: $background-color;
+
+      p {
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    .left-column {
+      flex: 0 0 100px;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      min-width: 120px;
+
+      img {
+        max-width: 90%;
+        height: auto;
+        display: block;
+      }
+    }
+
+    .right-column {
+      flex: 1;
+      box-sizing: border-box;
+
+      .truncate {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 200px;
+      }
+
+      .hide {
+        display: none;
+      }
+
+      .close-button {
+        position: absolute;
+        top: 8px;
+        right: 10px;
+        cursor: pointer;
+        background-color: $background-color;
+        border: 0;
+      }
+    }
+  }
+}
