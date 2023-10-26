@@ -1,4 +1,7 @@
 // import '../components/NotificationPopup/notificationPopup.css';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import NotificationsPopup from '@avada/assets/src/components/NotificationsItem';
 
 export default class DisplayManager {
   constructor() {
@@ -14,8 +17,10 @@ export default class DisplayManager {
     for (let i = 0; i < notifications.length; i++) {
       this.popupFrames.push(this.createPopUpFrame(notifications[i]));
     }
-    this.showPopUp(settings);
+    // this.showPopUp(settings);
     // container.appendChild(this.popupFrames[1]);
+
+    ReactDOM.render(<NotificationsPopup />, container);
     this.insertCSS();
     this.applySettingsForPopup(settings);
   }

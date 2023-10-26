@@ -1,6 +1,5 @@
-import {render} from 'preact';
-
 // import './notificationPopup.css';
+import React from 'react';
 
 const NotificationsPopup = notifications => {
   console.log('123');

@@ -12,6 +12,11 @@ export default {
     'read_orders',
     'read_products',
     'read_script_tags',
-    'write_script_tags'
+    'write_script_tags',
+    'read_checkouts',
+    'write_checkouts',
+    'write_orders',
+    'read_customers',
+    'write_customers'
   ]
 };

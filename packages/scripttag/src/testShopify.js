@@ -6,15 +6,10 @@ const Shopify = require('shopify-api-node');
   });
   // const scriptTags = await shopify.scriptTag.list();
   // console.log(scriptTags);
+  //
+  // const listWebhook = await shopify.webhook.list();
+  // console.log(listWebhook);
 
-  const listWebhook = await shopify.webhook.list();
-  console.log(listWebhook);
-
-  // await shopify.webhook.create({
-  //   address: 'https://localhost:3000/webhook/order/new',
-  //   format: 'json',
-  //   topic: 'orders/create'
-  // });
   // webhook.address = 'https://localhost:3000/webhook/order/new';
   // webhook.topic = 'orders/create';
   // webhook.format = 'json';
