@@ -1,5 +1,5 @@
 import React from 'react';
-// import './NotificationItem.css';
+import './NotificationItem.css';
 function NotificationsItem({
   city = 'test',
   country = 'test',

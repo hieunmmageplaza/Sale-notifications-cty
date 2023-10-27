@@ -44,11 +44,11 @@ export async function afterInstall(ctx) {
       addNotifications(notifications),
 
       // install webhook
-      shopify.webhook.create({
-        address: 'https://localhost:3000/webhook/order/new',
-        topic: 'orders/create',
-        format: 'json'
-      }),
+      // shopify.webhook.create({
+      //   address: 'https://localhost:3000/webhook/order/new',
+      //   topic: 'orders/create',
+      //   format: 'json'
+      // }),
 
       // install ScriptTag
       shopify.scriptTag.create({

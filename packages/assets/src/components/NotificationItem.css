@@ -23,7 +23,7 @@
 
 .left-column img{
   max-width: 80%;
-  height: auto;
+  max-height: 80%;
   display: block;
   border-radius: 15%;
 }
