@@ -11,6 +11,7 @@ import appConfig from '@functions/config/app';
 // Initialize all demand configuration for an application
 const api = new App();
 api.proxy = true;
+
 const verifyEmbedConfig = {
   returnHeader: true,
   apiKey: shopifyConfig.apiKey,

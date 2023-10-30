@@ -6,51 +6,43 @@ export default class DisplayManager {
   constructor() {
     this.notifications = [];
     this.settings = [];
-    this.popupFrames = [];
   }
 
   initialize({notifications, settings}) {
     this.insertContainer(settings);
-    const container = document.querySelector('#Avada-SalePop');
-
-    ReactDOM.render(
-      <NotificationsPopup
-        notifications={notifications[3]}
-        settings={settings}
-        onCloseButtonClick={this.fadeOut}
-      />,
-      container
-    );
-
-    // this.displayPopup(settings, notifications);
-    this.insertCSS();
+    this.displayPopup(settings, notifications);
   }
   displayPopup(settings, notifications) {
     let index = 0;
     const displayDuration = settings.displayDuration * 1000;
     const firstDelay = settings.firstDelay * 1000;
-    const container = document.querySelector('#Avada-SalePop');
+    const popupInterval = settings.popInterval * 1000;
     setTimeout(() => {
       const intervalId = setInterval(() => {
-        this.fadeOut();
         if (index < notifications.length) {
-          ReactDOM.render(
-            <NotificationsPopup
-              notifications={notifications[index]}
-              settings={settings}
-              onCloseButtonClick={this.fadeOut}
-            />,
-            container
-          );
+          console.log(index);
+          this.fadeOut();
+          this.renderComponent({notifications, settings, index});
           index++;
         } else {
           clearInterval(intervalId);
-          setTimeout(() => {
-            this.fadeOut();
-          }, displayDuration);
+          this.fadeOut();
         }
       }, displayDuration);
     }, firstDelay);
+  }
+
+  renderComponent({notifications, settings, index}) {
+    const container = document.querySelector('#Avada-SalePop');
+
+    ReactDOM.render(
+      <NotificationsPopup
+        notifications={notifications[index]}
+        settings={settings}
+        onCloseButtonClick={this.fadeOut}
+      />,
+      container
+    );
   }
 
   insertContainer(settings) {
@@ -92,30 +84,5 @@ export default class DisplayManager {
   fadeOut() {
     const container = document.querySelector('#Avada-SalePop');
     ReactDOM.unmountComponentAtNode(container);
-  }
-  insertCSS() {
-    const containerDiv = document.querySelector('#Avada-SalePop .container');
-    containerDiv.style.display = 'flex';
-    containerDiv.style.border = '1px solid #ddd';
-    containerDiv.style.borderRadius = '15px';
-    containerDiv.style.maxWidth = '400px';
-    containerDiv.style.backgroundColor = 'white';
-
-    const leftColumnDiv = document.querySelector('#Avada-SalePop .left-column');
-    leftColumnDiv.style.flex = '0 0 100px';
-    leftColumnDiv.style.justifyContent = 'center';
-    leftColumnDiv.style.alignItems = 'center';
-    leftColumnDiv.style.display = 'flex';
-    leftColumnDiv.style.minWidth = '120px';
-
-    const imageElement = document.querySelector('#Avada-SalePop img');
-
-    imageElement.style.maxWidth = '90%';
-    imageElement.style.height = 'auto';
-    imageElement.style.display = 'block';
-
-    const rightColumnDiv = document.querySelector('#Avada-SalePop .right-column');
-    rightColumnDiv.style.flex = '1';
-    rightColumnDiv.style.boxSizing = 'border-box';
   }
 }

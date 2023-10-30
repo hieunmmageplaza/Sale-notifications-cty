@@ -1,4 +1,4 @@
-// import './notificationPopup.scss';
+import './notificationPopup.scss';
 import React from 'react';
 
 const NotificationsPopup = ({notifications, settings, onCloseButtonClick}) => {

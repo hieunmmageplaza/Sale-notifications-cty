@@ -9,14 +9,10 @@ export default {
   scopes: shopify.scopes?.split(',') || [
     'read_themes',
     'write_themes',
-    'read_orders',
     'read_products',
-    'read_script_tags',
-    'write_script_tags',
-    'read_checkouts',
-    'write_checkouts',
+    'read_orders',
     'write_orders',
-    'read_customers',
-    'write_customers'
+    'read_script_tags',
+    'write_script_tags'
   ]
 };
