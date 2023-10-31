@@ -5,21 +5,23 @@ import {
 } from '@functions/repositories/settingsRepository';
 import {getCurrentShop} from '@functions/helpers/auth';
 import {defaultSettings} from '@functions/const/defaultSetting';
-import {getShopByDomain, getShopbyDomain} from '@functions/repositories/shopRepository';
 
 export async function updateSettingByDocId(ctx) {
   const data = ctx.req.body;
   const docId = data.data.id;
-  // eslint-disable-next-line no-unused-vars
+  console.log(JSON.stringify(data.data, null, 2));
   const {id, ...dataUpdate} = data.data;
   data.data = {...dataUpdate};
   const res = await updateSettingsData(docId, dataUpdate);
+
   ctx.body = {success: res.success};
 }
 
 export async function getSetting(ctx) {
   try {
     const shopId = getCurrentShop(ctx);
+    console.log('++++++' + shopId);
+
     const data = await getSettingByShopId(shopId);
     ctx.body = {data, success: true};
   } catch (error) {

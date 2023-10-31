@@ -13,8 +13,5 @@ export async function exampleAction(ctx) {
     status: 'open',
     limit: 30
   });
-
-  // const products = await shopify.product.get(8583537492251);
-
   ctx.body = {data: {orders}, success: true};
 }

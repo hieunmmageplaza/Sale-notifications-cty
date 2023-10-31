@@ -13,23 +13,28 @@ export default class DisplayManager {
     this.displayPopup(settings, notifications);
   }
   displayPopup(settings, notifications) {
-    let index = 0;
     const displayDuration = settings.displayDuration * 1000;
     const firstDelay = settings.firstDelay * 1000;
     const popupInterval = settings.popInterval * 1000;
+    let index = 0;
+
     setTimeout(() => {
       const intervalId = setInterval(() => {
         if (index < notifications.length) {
-          console.log(index);
           this.fadeOut();
-          this.renderComponent({notifications, settings, index});
-          index++;
+          setTimeout(
+            () => {
+              this.renderComponent({notifications, settings, index});
+              index++;
+            },
+            index > 0 ? popupInterval : 0
+          );
         } else {
           clearInterval(intervalId);
           this.fadeOut();
         }
       }, displayDuration);
-    }, firstDelay);
+    }, 2000);
   }
 
   renderComponent({notifications, settings, index}) {

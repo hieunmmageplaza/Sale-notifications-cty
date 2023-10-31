@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Layout, Page} from '@shopify/polaris';
+import {Card, Layout, Page, Spinner, Stack} from '@shopify/polaris';
 import ResourceItems from '@assets/ResourceItems';
 import useFetchApi from '@assets/hooks/api/useFetchApi';
 import '../../App.css';
@@ -11,7 +11,12 @@ import '../../App.css';
  * @constructor
  */
 export default function Notifications() {
-  const {data: notifications} = useFetchApi({url: '/notifications'});
+  const {data: notifications, loading: loading} = useFetchApi({url: '/notifications'});
+  const sectionMarkup = loading ? (
+    <Spinner accessibilityLabel="Loading form field" hasFocusableParent={false} />
+  ) : (
+    <ResourceItems data={notifications} />
+  );
   return (
     <Page
       title="Notifications"
@@ -20,9 +25,7 @@ export default function Notifications() {
     >
       <Layout>
         <Layout.Section>
-          <Card sectioned>
-            <ResourceItems data={notifications} />
-          </Card>
+          <Card sectioned>{sectionMarkup}</Card>
         </Layout.Section>
       </Layout>
     </Page>
