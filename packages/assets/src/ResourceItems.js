@@ -32,9 +32,7 @@ function ResourceItems({data}) {
   const formatDateTime = timestamp => {
     const dateObj = new Date(timestamp);
     const options = {month: 'long', day: 'numeric', year: 'numeric'};
-    const formattedDate = dateObj.toLocaleDateString(undefined, options);
-
-    return formattedDate;
+    return dateObj.toLocaleDateString(undefined, options);
   };
   const [sortOrder, setSortOrder] = useState('1');
 

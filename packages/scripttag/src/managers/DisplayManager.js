@@ -34,7 +34,7 @@ export default class DisplayManager {
           this.fadeOut();
         }
       }, displayDuration);
-    }, 2000);
+    }, firstDelay);
   }
 
   renderComponent({notifications, settings, index}) {
